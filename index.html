@@ -116,7 +116,16 @@
   .day-subject-list { padding: 10px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .subject-block { border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--cream); }
   .subject-block-header { display: flex; align-items: center; padding: 8px 12px; background: var(--warm); border-bottom: 1px solid var(--border); gap: 6px; }
-  .subject-block-name { font-family: 'Nanum Myeongjo', serif; font-weight: 700; font-size: 0.9rem; color: var(--deep); flex: 1; text-align: center; }
+  .subject-block-name {
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--deep);
+    flex: 1;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+  }
   .add-sub-btn { padding: 3px 8px; border: 1.5px solid var(--green); border-radius: 12px; background: transparent; color: var(--green); font-size: 0.7rem; cursor: pointer; font-family: 'Gowun Dodum', serif; transition: all .2s; white-space: nowrap; }
   .add-sub-btn:hover { background: var(--green); color: #fff; }
   .sub-item-row { padding: 8px 12px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 5px; }
@@ -499,7 +508,11 @@ function renderStudy(){
       const subjData=sd.days[day][subj.id]||{subs:[]};
       const subjBlock=document.createElement('div'); subjBlock.className='subject-block';
       const subjHeader=document.createElement('div'); subjHeader.className='subject-block-header';
-      subjHeader.innerHTML=`<span class="subject-block-name">${subj.name}</span><button class="add-sub-btn" onclick="addSubItem('${day}','${subj.id}')">+ 추가</button>`;
+      subjHeader.innerHTML=`
+        <button class="sub-del-btn" onclick="removeSubject('${subj.id}')" style="font-size:.75rem;flex-shrink:0">✕</button>
+        <span class="subject-block-name">${subj.name}</span>
+        <button class="add-sub-btn" onclick="addSubItem('${day}','${subj.id}')">+ 추가</button>
+      `;
       subjBlock.appendChild(subjHeader);
       if(!subjData.subs||!subjData.subs.length){ const e=document.createElement('div'); e.className='empty-sub'; e.textContent='세부 내용을 추가해보세요'; subjBlock.appendChild(e); }
       else { subjData.subs.forEach(sub=>{ const row=document.createElement('div'); row.className='sub-item-row';
