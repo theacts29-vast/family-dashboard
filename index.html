@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우리 가족 — 장영수 · 송혜경 · 장슬기 · 장한결</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700;800&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm: #EDE4D3;
+    --brown: #7C5C3E;
+    --deep: #3D2B1F;
+    --accent: #C47B3A;
+    --gold: #D4A853;
+    --green: #5A7A5E;
+    --soft-green: #8FAF93;
+    --red: #B85450;
+    --light: #FAF7F2;
+    --border: #D4C9B8;
+    --shadow: rgba(61,43,31,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Gowun Dodum', serif;
+    background: var(--cream);
+    color: var(--deep);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--deep);
+    color: var(--cream);
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+  .logo span { color: var(--cream); font-weight: 400; font-size: 1rem; margin-left: 8px; }
+
+  .member-selector {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .member-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .member-btn:hover { background: rgba(212,168,83,.2); border-color: var(--gold); }
+  .member-btn.active { background: var(--gold); color: var(--deep); border-color: var(--gold); font-weight: 700; }
+
+  nav {
+    background: var(--warm);
+    border-bottom: 2px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+  }
+  .tab {
+    padding: 14px 22px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    font-size: 0.9rem;
+    color: var(--brown);
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--deep); }
+  .tab.active {
+    color: var(--deep);
+    border-bottom-color: var(--accent);
+    font-weight: 700;
+  }
+
+  main { padding: 32px 40px; max-width: 1200px; margin: 0 auto; }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .section-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-sub {
+    color: var(--brown);
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .card-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .profile-card {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .profile-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); }
+  .avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--warm);
+    border: 3px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 16px;
+  }
+  .profile-name {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 4px;
+  }
+  .profile-nick {
+    color: var(--brown);
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+  .profile-field { margin-bottom: 8px; }
+  .profile-field label { font-size: 0.78rem; color: var(--brown); display: block; margin-bottom: 2px; }
+  .profile-field input, .profile-field textarea {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    color: var(--deep);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .profile-field input:focus, .profile-field textarea:focus { border-color: var(--accent); }
+  .save-btn {
+    margin-top: 12px;
+    padding: 8px 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    transition: background .2s;
+  }
+  .save-btn:hover { background: var(--brown); }
+
+  .bible-books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .bible-book {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .bible-book:hover { border-color: var(--accent); }
+  .bible-book.done { border-color: var(--green); background: rgba(90,122,94,.08); }
+  .bible-book.partial { border-color: var(--gold); background: rgba(212,168,83,.08); }
+  .book-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 6px;
+  }
+  .book-progress {
+    font-size: 0.75rem;
+    color: var(--brown);
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 3px;
+    transition: width .3s;
+  }
+  .progress-fill.partial { background: var(--gold); }
+
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--light);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 520px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  }
+  .modal-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--brown);
+    padding: 0 4px;
+  }
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+  }
+  .ch-btn {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: 'Gowun Dodum', serif;
+    color: var(--deep);
+  }
+  .ch-btn:hover { border-color: var(--accent); }
+  .ch-btn.checked { background: var(--green); color: #fff; border-color: var(--green); }
+
+  .bible-log-form {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 4px; }
+  .form-group label { font-size: 0.78rem; color: var(--brown); }
+  .form-group select, .form-group input[type=date], .form-group input[type=number], .form-group input[type=text] {
+    padding: 7px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    color: var(--deep);
+    outline: none;
+  }
+  .form-group select:focus, .form-group input:focus { border-color: var(--accent); }
+  .add-btn {
+    padding: 8px 18px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    transition: background .2s;
+  }
+  .add-btn:hover { background: #456249; }
+
+  .log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .log-table th {
+    background: var(--warm);
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 700;
+    color: var(--brown);
+    border-bottom: 2px solid var(--border);
+  }
+  .log-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--deep);
+  }
+  .log-table tr:last-child td { border-bottom: none; }
+  .log-table tr:hover td { background: var(--warm); }
+  .del-btn {
+    background: none;
+    border: none;
+    color: var(--red);
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+
+  .like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.82rem;
+    color: var(--brown);
+    transition: all .2s;
+  }
+  .like-btn:hover, .like-btn.liked { background: rgba(184,84,80,.1); border-color: var(--red); color: var(--red); }
+  .like-btn.liked { background: rgba(184,84,80,.15); }
+
+  .week-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .week-nav-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--light);
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--deep);
+    transition: all .2s;
+  }
+  .week-nav-btn:hover { border-color: var(--accent); }
+  .week-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--deep);
+    min-width: 160px;
+    text-align: center;
+  }
+  .plan-add-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .plan-add-row input {
+    flex: 1;
+    min-width: 180px;
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    color: var(--deep);
+    outline: none;
+  }
+  .plan-add-row input:focus { border-color: var(--accent); }
+
+  .study-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .study-table th {
+    background: var(--warm);
+    padding: 10px 8px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--brown);
+    border: 1px solid var(--border);
+  }
+  .study-table td {
+    padding: 8px;
+    border: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .study-table td:first-child { text-align: left; font-weight: 600; padding-left: 14px; }
+  .plan-input {
+    width: 100%;
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.8rem;
+    outline: none;
+    text-align: center;
+    color: var(--deep);
+  }
+  .plan-input:focus { border-color: var(--accent); }
+  .pct-input {
+    width: 60px;
+    padding: 5px 6px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.8rem;
+    outline: none;
+    text-align: center;
+    color: var(--deep);
+  }
+  .pct-input:focus { border-color: var(--accent); }
+  .pct-cell { position: relative; }
+  .pct-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: rgba(90,122,94,.15);
+    border-radius: 6px;
+    pointer-events: none;
+    transition: width .3s;
+  }
+
+  .ex-log-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-bottom: 16px;
+  }
+  .ex-type-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ex-type-btn {
+    padding: 6px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    background: var(--light);
+    cursor: pointer;
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.85rem;
+    color: var(--deep);
+    transition: all .2s;
+  }
+  .ex-type-btn:hover { border-color: var(--accent); }
+  .ex-type-btn.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .ex-custom-input {
+    padding: 7px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    outline: none;
+    width: 130px;
+  }
+  .ex-custom-input:focus { border-color: var(--accent); }
+
+  .ex-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .ex-stat-card {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .ex-stat-emoji { font-size: 1.6rem; margin-bottom: 4px; }
+  .ex-stat-count { font-size: 1.5rem; font-weight: 700; color: var(--deep); font-family: 'Black Han Sans', sans-serif; }
+  .ex-stat-label { font-size: 0.78rem; color: var(--brown); }
+
+  .feed-form {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .feed-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.9rem;
+    color: var(--deep);
+    resize: vertical;
+    outline: none;
+    margin-bottom: 10px;
+  }
+  .feed-form textarea:focus { border-color: var(--accent); }
+  .feed-post-row { display: flex; gap: 10px; align-items: center; }
+  .feed-category-select {
+    padding: 7px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    color: var(--deep);
+    outline: none;
+  }
+  .post-btn {
+    padding: 8px 20px;
+    background: var(--deep);
+    color: var(--gold);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Gowun Dodum', serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: background .2s;
+  }
+  .post-btn:hover { background: var(--brown); }
+
+  .feed-item {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px var(--shadow);
+    animation: fadeIn .3s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  .feed-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feed-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--warm);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .feed-meta { flex: 1; }
+  .feed-author { font-weight: 700; font-size: 0.88rem; color: var(--deep); }
+  .feed-time { font-size: 0.75rem; color: var(--brown); }
+  .feed-cat-badge {
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .cat-bible { background: rgba(90,122,94,.15); color: var(--green); }
+  .cat-study { background: rgba(196,123,58,.15); color: var(--accent); }
+  .cat-exercise { background: rgba(61,43,31,.1); color: var(--brown); }
+  .cat-daily { background: rgba(212,168,83,.2); color: #8B6914; }
+  .feed-content {
+    font-size: 0.9rem;
+    color: var(--deep);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .feed-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .like-list {
+    font-size: 0.78rem;
+    color: var(--brown);
+    margin-left: 4px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--deep);
+    color: var(--gold);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all .3s;
+    pointer-events: none;
+    z-index: 300;
+  }
+  .toast.show { opacity: 1; transform: none; }
+
+  @media (max-width: 700px) {
+    header { padding: 16px 16px; flex-direction: column; gap: 12px; }
+    nav { padding: 0 8px; overflow-x: auto; }
+    main { padding: 20px 16px; }
+    .bible-books-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  }
+
+  .testament-label {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--brown);
+    margin: 20px 0 10px;
+    border-left: 4px solid var(--gold);
+    padding-left: 10px;
+  }
+
+  .bible-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 5px 14px;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    background: var(--light);
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--deep);
+    transition: all .2s;
+    font-family: 'Gowun Dodum', serif;
+  }
+  .filter-btn.active { background: var(--deep); color: var(--gold); border-color: var(--deep); }
+
+  .summary-bar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 14px 20px;
+    background: var(--warm);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .sum-item { text-align: center; }
+  .sum-num { font-size: 1.4rem; font-weight: 700; font-family: 'Black Han Sans', sans-serif; color: var(--accent); }
+  .sum-label { font-size: 0.75rem; color: var(--brown); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">우리 가족 <span>성경 · 공부 · 운동</span></div>
+  <div class="member-selector" id="memberSelector">
+    <span style="color:var(--gold);font-size:.8rem">내 이름 :</span>
+    <button class="member-btn" data-member="장영수" onclick="selectMember('장영수')">장영수</button>
+    <button class="member-btn" data-member="송혜경" onclick="selectMember('송혜경')">송혜경</button>
+    <button class="member-btn" data-member="장슬기" onclick="selectMember('장슬기')">장슬기</button>
+    <button class="member-btn" data-member="장한결" onclick="selectMember('장한결')">장한결</button>
+  </div>
+</header>
+
+<nav>
+  <div class="tab active" onclick="showPage('feed')">📢 가족 피드</div>
+  <div class="tab" onclick="showPage('bible')">📖 성경읽기</div>
+  <div class="tab" onclick="showPage('study')">📚 공부기록</div>
+  <div class="tab" onclick="showPage('exercise')">🏃 운동현황</div>
+  <div class="tab" onclick="showPage('profile')">👤 가족 프로필</div>
+</nav>
+
+<main>
+
+  <div id="page-feed" class="page active">
+    <div class="section-title">📢 가족 피드</div>
+    <p class="section-sub">가족의 일상과 기록을 공유해요</p>
+    <div class="feed-form">
+      <textarea id="feedText" placeholder="오늘 어떤 일이 있었나요? 성경, 공부, 운동 기록을 공유해봐요 😊"></textarea>
+      <div class="feed-post-row">
+        <select class="feed-category-select" id="feedCat">
+          <option value="daily">💬 일상</option>
+          <option value="bible">📖 성경</option>
+          <option value="study">📚 공부</option>
+          <option value="exercise">🏃 운동</option>
+        </select>
+        <button class="post-btn" onclick="postFeed()">공유하기</button>
+      </div>
+    </div>
+    <div id="feedList"></div>
+  </div>
+
+  <div id="page-bible" class="page">
+    <div class="section-title">📖 성경읽기 기록</div>
+    <p class="section-sub">전체 성경 66권을 장 단위로 체크해요</p>
+    <div class="card">
+      <div class="card-title">📅 오늘 읽은 성경 기록</div>
+      <div class="bible-log-form">
+        <div class="form-group">
+          <label>날짜</label>
+          <input type="date" id="bibleDate">
+        </div>
+        <div class="form-group">
+          <label>성경 책</label>
+          <select id="bibleBook" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;background:var(--cream);font-family:'Gowun Dodum',serif;font-size:.88rem;color:var(--deep);outline:none;"></select>
+        </div>
+        <div class="form-group">
+          <label>장</label>
+          <input type="number" id="bibleChapter" min="1" style="width:70px">
+        </div>
+        <div class="form-group">
+          <label>메모</label>
+          <input type="text" id="bibleMemo" placeholder="한 줄 묵상" style="width:160px">
+        </div>
+        <button class="add-btn" onclick="addBibleLog()">기록 추가</button>
+      </div>
+      <table class="log-table">
+        <thead><tr><th>날짜</th><th>구성원</th><th>성경</th><th>장</th><th>메모</th><th>좋아요</th><th></th></tr></thead>
+        <tbody id="bibleLogBody"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 성경읽기표 — <span id="bibleViewMember"></span></div>
+      <div class="bible-filter">
+        <button class="filter-btn active" onclick="setBibleFilter('all',this)">전체</button>
+        <button class="filter-btn" onclick="setBibleFilter('old',this)">구약</button>
+        <button class="filter-btn" onclick="setBibleFilter('new',this)">신약</button>
+        <button class="filter-btn" onclick="setBibleFilter('done',this)">완독</button>
+        <button class="filter-btn" onclick="setBibleFilter('partial',this)">진행중</button>
+      </div>
+      <div class="summary-bar">
+        <div class="sum-item"><div class="sum-num" id="sumTotalCh">0</div><div class="sum-label">읽은 장</div></div>
+        <div class="sum-item"><div class="sum-num" id="sumTotalBook">0</div><div class="sum-label">완독 권</div></div>
+        <div class="sum-item"><div class="sum-num" id="sumPct">0%</div><div class="sum-label">전체 진도</div></div>
+      </div>
+      <div id="bibleGrid"></div>
+    </div>
+  </div>
+
+  <div id="page-study" class="page">
+    <div class="section-title">📚 공부 진도 기록</div>
+    <p class="section-sub">매주 일요일에 계획을 세우고, 매일 실제 진도를 체크해요</p>
+    <div class="week-selector">
+      <button class="week-nav-btn" onclick="changeWeek(-1)">◀ 이전 주</button>
+      <div class="week-label" id="weekLabel"></div>
+      <button class="week-nav-btn" onclick="changeWeek(1)">다음 주 ▶</button>
+      <button class="save-btn" onclick="saveStudy()" style="margin-left:10px">💾 저장</button>
+    </div>
+    <div class="card">
+      <div class="card-title">📝 공부 항목 추가</div>
+      <div class="plan-add-row">
+        <input type="text" id="studyItemInput" placeholder="공부 항목 입력 (예: 수학, 영어단어, 피아노)" onkeydown="if(event.key==='Enter')addStudyItem()">
+        <button class="add-btn" onclick="addStudyItem()">항목 추가</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 이번 주 공부 계획 & 실적</div>
+      <div style="overflow-x:auto">
+        <table class="study-table">
+          <thead>
+            <tr>
+              <th style="min-width:120px">항목</th>
+              <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th>
+              <th>삭제</th>
+            </tr>
+            <tr style="background:rgba(212,168,83,.1)">
+              <th style="font-size:.75rem;color:var(--brown)">계획 / 실적</th>
+              <th colspan="7" style="font-size:.72rem;color:var(--brown);text-align:center">계획(윗줄) · 실제%(아랫줄)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="studyBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-exercise" class="page">
+    <div class="section-title">🏃 운동 현황</div>
+    <p class="section-sub">운동 종류를 선택하고 기록해요</p>
+    <div class="card">
+      <div class="card-title">➕ 운동 기록 추가</div>
+      <div class="ex-log-form">
+        <div class="form-group">
+          <label>날짜</label>
+          <input type="date" id="exDate">
+        </div>
+        <div class="form-group">
+          <label>운동 종류</label>
+          <div class="ex-type-btns">
+            <button class="ex-type-btn" onclick="selectExType('자전거',this)">🚴 자전거</button>
+            <button class="ex-type-btn" onclick="selectExType('수영',this)">🏊 수영</button>
+            <button class="ex-type-btn" onclick="selectExType('러닝',this)">🏃 러닝</button>
+            <button class="ex-type-btn" onclick="selectExType('현대무용',this)">💃 현대무용</button>
+            <button class="ex-type-btn" onclick="selectExType('기타',this)">✏️ 기타</button>
+          </div>
+          <input class="ex-custom-input" id="exCustom" placeholder="기타 입력..." style="display:none;margin-top:6px">
+        </div>
+        <div class="form-group">
+          <label>시간(분)</label>
+          <input type="number" id="exDuration" min="1" style="width:80px;padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;background:var(--cream);font-family:'Gowun Dodum',serif;font-size:.88rem;outline:none;">
+        </div>
+        <div class="form-group">
+          <label>메모</label>
+          <input type="text" id="exMemo" placeholder="거리, 느낌 등" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;background:var(--cream);font-family:'Gowun Dodum',serif;font-size:.88rem;outline:none;width:160px;">
+        </div>
+        <button class="add-btn" onclick="addExercise()">기록</button>
+      </div>
+    </div>
+    <div class="ex-stats" id="exStats"></div>
+    <div class="card">
+      <div class="card-title">📋 운동 기록 목록</div>
+      <table class="log-table">
+        <thead><tr><th>날짜</th><th>구성원</th><th>종류</th><th>시간</th><th>메모</th><th>좋아요</th><th></th></tr></thead>
+        <tbody id="exLogBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="page-profile" class="page">
+    <div class="section-title">👤 가족 프로필</div>
+    <p class="section-sub">가족 구성원 정보를 입력하고 수정할 수 있어요</p>
+    <div class="profile-grid" id="profileGrid"></div>
+  </div>
+
+</main>
+
+<div class="modal-overlay" id="bibleModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modalBookName"></span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="chapters-grid" id="chaptersGrid"></div>
+    <div style="margin-top:14px;text-align:right">
+      <button class="save-btn" onclick="closeModal()">닫기</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MEMBERS = ['장영수','송혜경','장슬기','장한결'];
+const EMOJIS  = {'장영수':'👨','송혜경':'👩','장슬기':'👧','장한결':'👦'};
+let currentMember = localStorage.getItem('currentMember') || MEMBERS[0];
+
+function save(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+function load(key, def){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):def; }catch(e){ return def; } }
+
+let profiles = load('profiles', {
+  '장영수': {name:'장영수', nick:'', role:'아빠', bio:'', emoji:'👨'},
+  '송혜경': {name:'송혜경', nick:'', role:'엄마', bio:'', emoji:'👩'},
+  '장슬기': {name:'장슬기', nick:'', role:'첫째', bio:'', emoji:'👧'},
+  '장한결': {name:'장한결', nick:'', role:'둘째', bio:'', emoji:'👦'},
+});
+
+let bibleData = load('bibleData', {});
+let bibleLogs = load('bibleLogs', []);
+let studyData = load('studyData', {});
+let exLogs = load('exLogs', []);
+let feedPosts = load('feedPosts', []);
+let likes = load('likes', {});
+
+const BIBLE_BOOKS = [
+  {name:'창세기',ch:50,t:'old'},{name:'출애굽기',ch:40,t:'old'},{name:'레위기',ch:27,t:'old'},
+  {name:'민수기',ch:36,t:'old'},{name:'신명기',ch:34,t:'old'},{name:'여호수아',ch:24,t:'old'},
+  {name:'사사기',ch:21,t:'old'},{name:'룻기',ch:4,t:'old'},{name:'사무엘상',ch:31,t:'old'},
+  {name:'사무엘하',ch:24,t:'old'},{name:'열왕기상',ch:22,t:'old'},{name:'열왕기하',ch:25,t:'old'},
+  {name:'역대상',ch:29,t:'old'},{name:'역대하',ch:36,t:'old'},{name:'에스라',ch:10,t:'old'},
+  {name:'느헤미야',ch:13,t:'old'},{name:'에스더',ch:10,t:'old'},{name:'욥기',ch:42,t:'old'},
+  {name:'시편',ch:150,t:'old'},{name:'잠언',ch:31,t:'old'},{name:'전도서',ch:12,t:'old'},
+  {name:'아가',ch:8,t:'old'},{name:'이사야',ch:66,t:'old'},{name:'예레미야',ch:52,t:'old'},
+  {name:'예레미야애가',ch:5,t:'old'},{name:'에스겔',ch:48,t:'old'},{name:'다니엘',ch:12,t:'old'},
+  {name:'호세아',ch:14,t:'old'},{name:'요엘',ch:3,t:'old'},{name:'아모스',ch:9,t:'old'},
+  {name:'오바댜',ch:1,t:'old'},{name:'요나',ch:4,t:'old'},{name:'미가',ch:7,t:'old'},
+  {name:'나훔',ch:3,t:'old'},{name:'하박국',ch:3,t:'old'},{name:'스바냐',ch:3,t:'old'},
+  {name:'학개',ch:2,t:'old'},{name:'스가랴',ch:14,t:'old'},{name:'말라기',ch:4,t:'old'},
+  {name:'마태복음',ch:28,t:'new'},{name:'마가복음',ch:16,t:'new'},{name:'누가복음',ch:24,t:'new'},
+  {name:'요한복음',ch:21,t:'new'},{name:'사도행전',ch:28,t:'new'},{name:'로마서',ch:16,t:'new'},
+  {name:'고린도전서',ch:16,t:'new'},{name:'고린도후서',ch:13,t:'new'},{name:'갈라디아서',ch:6,t:'new'},
+  {name:'에베소서',ch:6,t:'new'},{name:'빌립보서',ch:4,t:'new'},{name:'골로새서',ch:4,t:'new'},
+  {name:'데살로니가전서',ch:5,t:'new'},{name:'데살로니가후서',ch:3,t:'new'},{name:'디모데전서',ch:6,t:'new'},
+  {name:'디모데후서',ch:4,t:'new'},{name:'디도서',ch:3,t:'new'},{name:'빌레몬서',ch:1,t:'new'},
+  {name:'히브리서',ch:13,t:'new'},{name:'야고보서',ch:5,t:'new'},{name:'베드로전서',ch:5,t:'new'},
+  {name:'베드로후서',ch:3,t:'new'},{name:'요한1서',ch:5,t:'new'},{name:'요한2서',ch:1,t:'new'},
+  {name:'요한3서',ch:1,t:'new'},{name:'유다서',ch:1,t:'new'},{name:'요한계시록',ch:22,t:'new'},
+];
+const TOTAL_CHAPTERS = BIBLE_BOOKS.reduce((s,b)=>s+b.ch,0);
+
+function selectMember(m){
+  currentMember = m;
+  localStorage.setItem('currentMember', m);
+  document.querySelectorAll('.member-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.member===m);
+  });
+  renderAll();
+  toast(`${m} 님으로 전환했어요`);
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const tabs = ['feed','bible','study','exercise','profile'];
+  document.querySelectorAll('.tab')[tabs.indexOf(id)].classList.add('active');
+  renderAll();
+}
+
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2000);
+}
+
+function renderProfile(){
+  const grid = document.getElementById('profileGrid');
+  grid.innerHTML = '';
+  MEMBERS.forEach(m=>{
+    const p = profiles[m];
+    const card = document.createElement('div');
+    card.className = 'profile-card';
+    card.innerHTML = `
+      <div class="avatar">${p.emoji||EMOJIS[m]}</div>
+      <div class="profile-name">${m}</div>
+      <div class="profile-nick">${p.nick||'닉네임 없음'} · ${p.role||'구성원'}</div>
+      <div class="profile-field"><label>닉네임</label><input type="text" value="${p.nick||''}" placeholder="닉네임" onchange="updateProfile('${m}','nick',this.value)"></div>
+      <div class="profile-field"><label>역할</label><input type="text" value="${p.role||''}" placeholder="아빠 / 엄마 / 첫째 ..." onchange="updateProfile('${m}','role',this.value)"></div>
+      <div class="profile-field"><label>이모지 아바타</label><input type="text" value="${p.emoji||EMOJIS[m]}" placeholder="😊" style="width:70px" onchange="updateProfile('${m}','emoji',this.value)"></div>
+      <div class="profile-field"><label>한 마디</label><input type="text" value="${p.bio||''}" placeholder="자기 소개 한 마디" onchange="updateProfile('${m}','bio',this.value)"></div>
+      <button class="save-btn" onclick="saveProfile('${m}')">저장</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+function updateProfile(m,field,val){ profiles[m][field]=val; }
+function saveProfile(m){
+  save('profiles',profiles);
+  renderProfile();
+  toast(`${m} 프로필이 저장됐어요!`);
+}
+
+let bibleFilter = 'all';
+
+function initBibleSelect(){
+  const sel = document.getElementById('bibleBook');
+  sel.innerHTML = BIBLE_BOOKS.map((b,i)=>`<option value="${i}">${b.name}</option>`).join('');
+}
+function getMemberBible(m){ if(!bibleData[m]) bibleData[m]={}; return bibleData[m]; }
+function getChecked(m,bi){ const d=getMemberBible(m); if(!d[bi]) d[bi]=[]; return new Set(d[bi]); }
+function setChecked(m,bi,set){ if(!bibleData[m]) bibleData[m]={}; bibleData[m][bi]=Array.from(set); save('bibleData',bibleData); }
+
+function setBibleFilter(f,btn){
+  bibleFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBibleGrid();
+}
+
+function renderBibleGrid(){
+  const m = currentMember;
+  document.getElementById('bibleViewMember').textContent = m+' 님';
+  const grid = document.getElementById('bibleGrid');
+  grid.innerHTML = '';
+  let totalRead=0, totalBooks=0;
+  const books = BIBLE_BOOKS.map((b,i)=>{
+    const checked=getChecked(m,i);
+    const pct = b.ch>0?checked.size/b.ch:0;
+    if(checked.size===b.ch && b.ch>0) totalBooks++;
+    totalRead+=checked.size;
+    return {b,i,checked,pct};
+  });
+  document.getElementById('sumTotalCh').textContent=totalRead;
+  document.getElementById('sumTotalBook').textContent=totalBooks;
+  document.getElementById('sumPct').textContent=Math.round(totalRead/TOTAL_CHAPTERS*100)+'%';
+  let curTestament='';
+  books.forEach(({b,i,checked,pct})=>{
+    const isDone=checked.size===b.ch&&b.ch>0;
+    const isPartial=checked.size>0&&!isDone;
+    if(bibleFilter==='old'&&b.t!=='old') return;
+    if(bibleFilter==='new'&&b.t!=='new') return;
+    if(bibleFilter==='done'&&!isDone) return;
+    if(bibleFilter==='partial'&&!isPartial) return;
+    if(b.t!==curTestament){
+      curTestament=b.t;
+      const lbl=document.createElement('div');
+      lbl.className='testament-label';
+      lbl.textContent=b.t==='old'?'구약 성경 (39권)':'신약 성경 (27권)';
+      grid.appendChild(lbl);
+    }
+    let gridRow = grid.querySelector(`.bible-books-grid[data-t="${b.t}"]`);
+    if(!gridRow){ gridRow=document.createElement('div'); gridRow.className='bible-books-grid'; gridRow.dataset.t=b.t; grid.appendChild(gridRow); }
+    const card=document.createElement('div');
+    card.className='bible-book'+(isDone?' done':isPartial?' partial':'');
+    card.onclick=()=>openBibleModal(i);
+    card.innerHTML=`<div class="book-name">${b.name}</div><div class="book-progress">${checked.size} / ${b.ch} 장</div><div class="progress-bar"><div class="progress-fill${isPartial&&!isDone?' partial':''}" style="width:${pct*100}%"></div></div>`;
+    gridRow.appendChild(card);
+  });
+}
+
+function openBibleModal(bi){
+  const b=BIBLE_BOOKS[bi]; const m=currentMember; const checked=getChecked(m,bi);
+  document.getElementById('modalBookName').textContent=b.name+' ('+b.ch+'장)';
+  const grid=document.getElementById('chaptersGrid'); grid.innerHTML='';
+  for(let c=1;c<=b.ch;c++){
+    const btn=document.createElement('button');
+    btn.className='ch-btn'+(checked.has(c)?' checked':'');
+    btn.textContent=c;
+    btn.onclick=()=>{ const s=getChecked(m,bi); if(s.has(c)) s.delete(c); else s.add(c); setChecked(m,bi,s); btn.classList.toggle('checked',s.has(c)); renderBibleGrid(); };
+    grid.appendChild(btn);
+  }
+  document.getElementById('bibleModal').classList.add('open');
+}
+function closeModal(){ document.getElementById('bibleModal').classList.remove('open'); }
+
+function addBibleLog(){
+  const date=document.getElementById('bibleDate').value;
+  const bi=document.getElementById('bibleBook').value;
+  const ch=document.getElementById('bibleChapter').value;
+  const memo=document.getElementById('bibleMemo').value;
+  if(!date||!ch){ toast('날짜와 장을 입력해주세요'); return; }
+  const id='bl_'+Date.now();
+  bibleLogs.unshift({id,member:currentMember,date,bookIdx:parseInt(bi),chapter:parseInt(ch),memo,ts:Date.now()});
+  save('bibleLogs',bibleLogs);
+  const s=getChecked(currentMember,parseInt(bi)); s.add(parseInt(ch)); setChecked(currentMember,parseInt(bi),s);
+  document.getElementById('bibleChapter').value=''; document.getElementById('bibleMemo').value='';
+  renderBibleLogs(); renderBibleGrid(); toast('성경 기록이 추가됐어요! ✝️');
+}
+
+function renderBibleLogs(){
+  const tbody=document.getElementById('bibleLogBody'); tbody.innerHTML='';
+  bibleLogs.slice(0,30).forEach(log=>{
+    const b=BIBLE_BOOKS[log.bookIdx]; const myLikes=likes[log.id]||[]; const liked=myLikes.includes(currentMember);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${log.date}</td><td>${log.member}</td><td>${b?b.name:'?'}</td><td>${log.chapter}장</td><td>${log.memo||'-'}</td><td><button class="like-btn${liked?' liked':''}" onclick="toggleLike('${log.id}')">❤️ ${myLikes.length||''}</button></td><td>${log.member===currentMember?`<button class="del-btn" onclick="deleteBibleLog('${log.id}')">삭제</button>`:''}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+function deleteBibleLog(id){ bibleLogs=bibleLogs.filter(l=>l.id!==id); save('bibleLogs',bibleLogs); renderBibleLogs(); toast('삭제됐어요'); }
+
+const DAYS=['월','화','수','목','금','토','일'];
+let currentWeekOffset=0;
+
+function getWeekKey(offset=0){ const d=new Date(); d.setDate(d.getDate()-d.getDay()+1+offset*7); return d.toISOString().slice(0,10); }
+function getWeekLabel(offset=0){
+  const mon=new Date(); mon.setDate(mon.getDate()-mon.getDay()+1+offset*7);
+  const sun=new Date(mon); sun.setDate(sun.getDate()+6);
+  return `${mon.getMonth()+1}/${mon.getDate()} ~ ${sun.getMonth()+1}/${sun.getDate()}`;
+}
+function getStudy(m,wk){ if(!studyData[m]) studyData[m]={}; if(!studyData[m][wk]) studyData[m][wk]={items:[],plan:{},actual:{}}; return studyData[m][wk]; }
+function changeWeek(delta){ currentWeekOffset+=delta; renderStudy(); }
+
+function addStudyItem(){
+  const inp=document.getElementById('studyItemInput'); const val=inp.value.trim();
+  if(!val){ toast('항목을 입력해주세요'); return; }
+  const wk=getWeekKey(currentWeekOffset); const sd=getStudy(currentMember,wk);
+  if(!sd.items.includes(val)) sd.items.push(val);
+  save('studyData',studyData); inp.value=''; renderStudy(); toast(`"${val}" 항목이 추가됐어요`);
+}
+function saveStudy(){ save('studyData',studyData); toast('저장됐어요! 💾'); }
+
+function renderStudy(){
+  document.getElementById('weekLabel').textContent=getWeekLabel(currentWeekOffset);
+  const wk=getWeekKey(currentWeekOffset); const sd=getStudy(currentMember,wk);
+  const tbody=document.getElementById('studyBody'); tbody.innerHTML='';
+  sd.items.forEach(item=>{
+    if(!sd.plan[item]) sd.plan[item]={}; if(!sd.actual[item]) sd.actual[item]={};
+    const tr1=document.createElement('tr');
+    tr1.innerHTML=`<td rowspan="2" style="font-weight:700;color:var(--deep)">${item}</td>${DAYS.map(d=>`<td><input class="plan-input" placeholder="계획" value="${sd.plan[item][d]||''}" onchange="studyData['${currentMember}']['${wk}'].plan['${item}']['${d}']=this.value"></td>`).join('')}<td rowspan="2"><button class="del-btn" onclick="removeStudyItem('${item}')">삭제</button></td>`;
+    const tr2=document.createElement('tr');
+    tr2.innerHTML=DAYS.map(d=>{ const v=sd.actual[item][d]||0; return `<td class="pct-cell"><div class="pct-bar" style="width:${v}%"></div><input class="pct-input" type="number" min="0" max="100" value="${v}" placeholder="%" onchange="updateActual('${item}','${d}',this.value,this)"></td>`; }).join('');
+    tbody.appendChild(tr1); tbody.appendChild(tr2);
+  });
+}
+function updateActual(item,day,val,input){
+  const wk=getWeekKey(currentWeekOffset); const sd=getStudy(currentMember,wk);
+  if(!sd.actual[item]) sd.actual[item]={}; sd.actual[item][day]=parseInt(val)||0;
+  input.closest('.pct-cell').querySelector('.pct-bar').style.width=(parseInt(val)||0)+'%';
+  save('studyData',studyData);
+}
+function removeStudyItem(item){
+  const wk=getWeekKey(currentWeekOffset); const sd=getStudy(currentMember,wk);
+  sd.items=sd.items.filter(i=>i!==item); save('studyData',studyData); renderStudy();
+}
+
+let selectedExType='';
+function selectExType(type,btn){
+  selectedExType=type;
+  document.querySelectorAll('.ex-type-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const custom=document.getElementById('exCustom');
+  custom.style.display=type==='기타'?'block':'none';
+  if(type!=='기타') custom.value='';
+}
+function addExercise(){
+  const date=document.getElementById('exDate').value; const dur=document.getElementById('exDuration').value;
+  let type=selectedExType;
+  if(type==='기타'){ type=document.getElementById('exCustom').value.trim()||'기타'; }
+  if(!date||!type||!dur){ toast('날짜, 운동종류, 시간을 입력해주세요'); return; }
+  const memo=document.getElementById('exMemo').value; const id='ex_'+Date.now();
+  exLogs.unshift({id,member:currentMember,date,type,duration:parseInt(dur),memo,ts:Date.now()});
+  save('exLogs',exLogs);
+  document.getElementById('exDuration').value=''; document.getElementById('exMemo').value='';
+  renderExercise(); toast('운동 기록 완료! 💪');
+}
+const EX_EMOJI={자전거:'🚴',수영:'🏊',러닝:'🏃',현대무용:'💃'};
+function renderExercise(){
+  const myLogs=exLogs.filter(l=>l.member===currentMember); const typeCounts={};
+  myLogs.forEach(l=>{ typeCounts[l.type]=(typeCounts[l.type]||0)+1; });
+  const statsDiv=document.getElementById('exStats'); const types=['자전거','수영','러닝','현대무용'];
+  statsDiv.innerHTML=types.map(t=>`<div class="ex-stat-card"><div class="ex-stat-emoji">${EX_EMOJI[t]}</div><div class="ex-stat-count">${typeCounts[t]||0}</div><div class="ex-stat-label">${t} 횟수</div></div>`).join('');
+  const others=Object.keys(typeCounts).filter(t=>!types.includes(t));
+  if(others.length) statsDiv.innerHTML+=others.map(t=>`<div class="ex-stat-card"><div class="ex-stat-emoji">✏️</div><div class="ex-stat-count">${typeCounts[t]}</div><div class="ex-stat-label">${t}</div></div>`).join('');
+  const tbody=document.getElementById('exLogBody'); tbody.innerHTML='';
+  exLogs.slice(0,40).forEach(log=>{
+    const myLikes=likes[log.id]||[]; const liked=myLikes.includes(currentMember);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${log.date}</td><td>${log.member}</td><td>${EX_EMOJI[log.type]||'✏️'} ${log.type}</td><td>${log.duration}분</td><td>${log.memo||'-'}</td><td><button class="like-btn${liked?' liked':''}" onclick="toggleLike('${log.id}')">❤️ ${myLikes.length||''}</button></td><td>${log.member===currentMember?`<button class="del-btn" onclick="deleteExLog('${log.id}')">삭제</button>`:''}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+function deleteExLog(id){ exLogs=exLogs.filter(l=>l.id!==id); save('exLogs',exLogs); renderExercise(); toast('삭제됐어요'); }
+
+function postFeed(){
+  const text=document.getElementById('feedText').value.trim();
+  if(!text){ toast('내용을 입력해주세요'); return; }
+  const cat=document.getElementById('feedCat').value; const id='fp_'+Date.now();
+  feedPosts.unshift({id,member:currentMember,text,cat,ts:Date.now()});
+  save('feedPosts',feedPosts); document.getElementById('feedText').value=''; renderFeed(); toast('공유됐어요! 🎉');
+}
+const CAT_LABEL={bible:'📖 성경',study:'📚 공부',exercise:'🏃 운동',daily:'💬 일상'};
+const CAT_CLASS={bible:'cat-bible',study:'cat-study',exercise:'cat-exercise',daily:'cat-daily'};
+function renderFeed(){
+  const list=document.getElementById('feedList'); list.innerHTML='';
+  if(!feedPosts.length){ list.innerHTML='<div style="text-align:center;color:var(--brown);padding:40px;font-size:.9rem">아직 게시글이 없어요. 첫 번째 기록을 공유해봐요! 😊</div>'; return; }
+  feedPosts.forEach(post=>{
+    const p=profiles[post.member]; const myLikes=likes[post.id]||[]; const liked=myLikes.includes(currentMember);
+    const date=new Date(post.ts);
+    const timeStr=date.getFullYear()+'.'+(date.getMonth()+1)+'.'+date.getDate()+' '+date.getHours()+':'+String(date.getMinutes()).padStart(2,'0');
+    const div=document.createElement('div'); div.className='feed-item';
+    div.innerHTML=`<div class="feed-header"><div class="feed-avatar">${p?.emoji||EMOJIS[post.member]}</div><div class="feed-meta"><div class="feed-author">${post.member} <span style="font-weight:400;color:var(--brown);font-size:.8rem">${p?.nick?'('+p.nick+')':''}</span></div><div class="feed-time">${timeStr}</div></div><span class="feed-cat-badge ${CAT_CLASS[post.cat]}">${CAT_LABEL[post.cat]}</span></div><div class="feed-content">${post.text.replace(/\n/g,'<br>')}</div><div class="feed-actions"><button class="like-btn${liked?' liked':''}" onclick="toggleLike('${post.id}')">❤️ 좋아요 ${myLikes.length?'('+myLikes.length+')':''}</button><span class="like-list">${myLikes.length?myLikes.join(', ')+'이(가) 좋아합니다':''}</span>${post.member===currentMember?`<button class="del-btn" style="margin-left:auto" onclick="deleteFeedPost('${post.id}')">삭제</button>`:''}</div>`;
+    list.appendChild(div);
+  });
+}
+function deleteFeedPost(id){ feedPosts=feedPosts.filter(p=>p.id!==id); save('feedPosts',feedPosts); renderFeed(); }
+
+function toggleLike(postId){
+  if(!likes[postId]) likes[postId]=[]; const idx=likes[postId].indexOf(currentMember);
+  if(idx>=0) likes[postId].splice(idx,1); else likes[postId].push(currentMember);
+  save('likes',likes); renderFeed(); renderBibleLogs(); renderExercise();
+}
+
+function renderAll(){ renderProfile(); renderBibleGrid(); renderBibleLogs(); renderStudy(); renderExercise(); renderFeed(); }
+
+function init(){
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('bibleDate').value=today;
+  document.getElementById('exDate').value=today;
+  initBibleSelect();
+  document.querySelectorAll('.member-btn').forEach(b=>{ b.classList.toggle('active',b.dataset.member===currentMember); });
+  renderAll();
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
